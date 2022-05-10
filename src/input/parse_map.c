@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:15:13 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/09 21:45:39 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/05/10 23:37:03 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,20 @@ int	ft_make_grid_square(t_game *game)
 	return (TRUE);
 }
 
+int	ft_get_player(t_game *game, int i, int j)
+{
+	if (ft_strchr("NSEW", game->map.grid[i][j]))
+	{
+		if (game->pl.dir != '\0')
+			return (ft_print_error("Multiple players"));
+		game->pl.dir = game->map.grid[i][j];
+		game->pl.p.x = i;
+		game->pl.p.y = j;
+		printf("X %d Y %d \n", i, j);
+	}
+	return (TRUE);
+}
+
 int	ft_check_map(t_game *game)
 {
 	int	i;
@@ -54,15 +68,9 @@ int	ft_check_map(t_game *game)
 		{
 			if (!ft_strchr(" 10NSEW", game->map.grid[i][j]))
 				return (ft_print_error("Not valid symbols in the map found"));
-			if (ft_strchr("0NSEW", game->map.grid[i][j]) && (i == 0 || j == 0
-				|| i == game->map.row_c - 1 || j == game->map.col_c - 1))
-				return (ft_print_error("Map is not surrounded by walls"));
-			if (ft_strchr("0NSEW", game->map.grid[i][j])
-				&& (game->map.grid[i + 1][j] == ' '
-				|| game->map.grid[i - 1][j] == ' '
-				|| game->map.grid[i][j + 1] == ' '
-				|| game->map.grid[i][j - 1] == ' '))
-				return (ft_print_error("Map is not surrounded by walls"));
+			if (!ft_get_player(game, i, j)
+				|| !ft_is_map_surrounded_by_wall(game, i, j))
+				return (FALSE);
 			j++;
 		}
 		i++;

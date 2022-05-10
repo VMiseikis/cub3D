@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:45:16 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/10 19:30:20 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/05/10 23:24:48 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_point
 
 typedef struct s_player
 {
+	char	dir;
 	t_point	p;
 }	t_player;
 
@@ -59,16 +60,16 @@ typedef struct s_map
 	t_wall		we;
 	t_color		floor;
 	t_color		ceiling;
-	t_player	pl;
 }	t_map;
 
 typedef struct s_game
 {
-	void	*mlx;
-	void	*window;
-	int		width;
-	int		height;
-	t_map	map;
+	void		*mlx;
+	void		*window;
+	int			width;
+	int			height;
+	t_map		map;
+	t_player	pl;
 }	t_game;
 
 //	Uteles
@@ -89,7 +90,7 @@ int	ft_has_only_spaces(char *str);
 
 int	ft_check_rgb(char **str, int *nbr);
 int	ft_check_texture_path_extension(char **line, char **path);
-
+int	ft_is_map_surrounded_by_wall(t_game *game, int i, int j);
 //helpers
 void	ft_skip_empty_lines_from_file(t_game *game, char **line);
 

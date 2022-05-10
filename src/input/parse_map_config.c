@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:48:25 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/10 18:34:06 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/05/10 21:46:24 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,12 @@ int	ft_parse_floor_ceiling_colors(t_game *game, char **line)
 {
 	char	*temp;
 
-	if (line[0][0] == 'F')
-	{
-		if (game->map.floor.rgb[0] != -1)
-			return (ft_print_error("Duplicate map configuration entries found in map file"));
-	}
-	else if (line[0][0] == 'C')
-	{
-		if (game->map.ceiling.rgb[0] != -1)
-			return (ft_print_error("Duplicate map configuration entries found in map file"));
-	}
+	if ((line[0][0] == 'F' && game->map.floor.rgb[0] != -1)
+		|| (line[0][0] == 'C' && game->map.ceiling.rgb[0] != -1))
+		return (ft_print_error("Duplicate map configuration entries found in map file"));
 	temp = ft_substr(*line, 2, ft_strlen(*line));
-	if (!ft_trim_str_front(&temp, ' ') || !ft_store_map_fc_colors(game, line[0][0], temp))
+	if (!ft_trim_str_front(&temp, ' ')
+		|| !ft_store_map_fc_colors(game, line[0][0], temp))
 	{
 		free(temp);
 		return (FALSE);

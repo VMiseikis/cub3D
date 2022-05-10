@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 16:53:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/09 19:45:19 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/05/10 21:18:48 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ char	*ft_strdup(const char *s);
 char	*ft_strcpy(char *s1, const char *s2);
 char	**ft_2dstrcpy(char **src, char **dest);
 char	*ft_strchr(const char *str, int c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

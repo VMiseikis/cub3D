@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:08:22 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/10 18:31:45 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/05/10 21:34:38 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_read_till_map_found_in_file(t_game *game, char **line)
 {
-	char	*sub;
 	char	*temp;
 
 	ft_skip_empty_lines_from_file(game, line);
@@ -22,16 +21,15 @@ int	ft_read_till_map_found_in_file(t_game *game, char **line)
 	{
 		temp = ft_strdup(*line);
 		ft_trim_str_front(&temp, ' ');
-		sub = ft_substr(temp, 0, 3);
-		if (ft_strcmp(sub, "NO ") == 0 || ft_strcmp(sub, "SO ") == 0
-			|| ft_strcmp(sub, "EA ") == 0 || ft_strcmp(sub, "WE ") == 0
-			|| (temp[1] == ' ' && (temp[0] == 'F' || temp[0] == 'C')))
+		if (ft_strncmp(temp, "NO", 2) == 0
+			|| ft_strncmp(temp, "SO", 2) == 0
+			|| ft_strncmp(temp, "EA", 2) == 0
+			|| ft_strncmp(temp, "WE", 2) == 0
+			|| temp[0] == 'F' || temp[0] == 'C')
 		{
-			free (sub);
 			free(temp);
 			return (ft_print_error("Duplicate map configuration entries found in map file"));
 		}
-		free (sub);
 		free(temp);
 		return (TRUE);
 	}
@@ -40,31 +38,22 @@ int	ft_read_till_map_found_in_file(t_game *game, char **line)
 
 int	ft_get_map_colors_textures(t_game *game, char **line)
 {
-	char	*sub;
-
-	if (!ft_strchr("NSEWFC", *line[0]))
-		return (ft_print_error("Unsupported, missing or corrupted entries found in map file"));
-	sub = ft_substr(*line, 0, 3);
-	if ((line[0][0] == 'F' || line[0][0] == 'C') && line[0][1] == ' '
+	if ((ft_strncmp(*line, "F ", 2) == 0
+			|| ft_strncmp(*line, "C ", 2) == 0)
 		&& ft_strlen(*line) > 6)
 	{
 		if (!ft_parse_floor_ceiling_colors(game, line))
-		{
-			free(sub);
 			return (FALSE);
-		}
 	}
-	else if ((ft_strcmp(sub, "NO ") == 0 || ft_strcmp(sub, "SO ") == 0
-			|| ft_strcmp(sub, "EA ") == 0 || ft_strcmp(sub, "WE ") == 0)
+	else if ((ft_strncmp(*line, "NO ", 3) == 0
+			|| ft_strncmp(*line, "SO ", 3) == 0
+			|| ft_strncmp(*line, "EA ", 3) == 0
+			|| ft_strncmp(*line, "WE ", 3) == 0)
 		&& ft_strlen(*line) > 9)
 	{
 		if (!ft_store_wall_text_path(game, line))
-		{
-			free(sub);
 			return (FALSE);
-		}
 	}
-	free(sub);
 	return (TRUE);
 }
 
@@ -74,6 +63,8 @@ int	ft_get_map_config(t_game *game, char **line)
 	{
 		if (*line != NULL && ft_trim_str_front(line, ' '))
 		{	
+			if (!ft_strchr("NSEWFC", *line[0]))
+				return (ft_print_error("Unsupported, missing or corrupted entries found in map file"));
 			if (!ft_get_map_colors_textures(game, line))
 			{
 				free(*line);
