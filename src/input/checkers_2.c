@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:41:40 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/10 21:47:49 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/06/04 17:16:24 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ int	ft_is_map_surrounded_by_wall(t_game *game, int i, int j)
 	if (ft_strchr("0NSEW", game->map.grid[i][j])
 		&& (game->map.grid[i + 1][j] == ' '
 		|| game->map.grid[i - 1][j] == ' '
+		|| game->map.grid[i + 1][j - 1] == ' '
+		|| game->map.grid[i + 1][j + 1] == ' '
+		|| game->map.grid[i - 1][j - 1] == ' '
+		|| game->map.grid[i - 1][j + 1] == ' '
 		|| game->map.grid[i][j + 1] == ' '
 		|| game->map.grid[i][j - 1] == ' '))
 		return (ft_print_error("Map is not surrounded by walls"));

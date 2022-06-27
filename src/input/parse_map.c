@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:15:13 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/10 23:37:03 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/06/27 16:13:09 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ int	ft_make_grid_square(t_game *game)
 	return (TRUE);
 }
 
+float	ft_player_look_direction(char c)
+{
+	if (c == 'N')
+		return(PI / 2);
+	if (c == 'E')
+		return(0);
+	if (c == 'S')
+		return(3 * PI / 2);
+	return(PI);
+}
+
 int	ft_get_player(t_game *game, int i, int j)
 {
 	if (ft_strchr("NSEW", game->map.grid[i][j]))
@@ -48,9 +59,13 @@ int	ft_get_player(t_game *game, int i, int j)
 		if (game->pl.dir != '\0')
 			return (ft_print_error("Multiple players"));
 		game->pl.dir = game->map.grid[i][j];
-		game->pl.p.x = i;
-		game->pl.p.y = j;
-		printf("X %d Y %d \n", i, j);
+		game->pl.angle = ft_player_look_direction(game->map.grid[i][j]);
+		game->pl.p.x = j;
+		game->pl.p.y = i;
+		// game->pl.mm_p.x = j * game->mmap.t_sz + (game->mmap.t_sz / 2);
+		// game->pl.mm_p.y = i * game->mmap.t_sz + (game->mmap.t_sz / 2);
+		game->pl.mm_p.x = j * game->mmap.t_sz;
+		game->pl.mm_p.y = i * game->mmap.t_sz;
 	}
 	return (TRUE);
 }

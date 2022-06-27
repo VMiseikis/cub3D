@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:09:16 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/10 21:32:58 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/05/15 20:02:42 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_is_file_valid(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (FALSE);
+	close(fd);
 	return (TRUE);
 }
 
