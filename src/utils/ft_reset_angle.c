@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_time.c                                          :+:      :+:    :+:   */
+/*   ft_reset_angle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 15:08:08 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/07/13 15:43:42 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/07/10 17:24:53 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/07/10 22:25:48 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-long	ft_get_time(void)
+double	ft_reset_angle(double angle)
 {
-	struct timeval	time_stamp;
-
-	gettimeofday(&time_stamp, NULL);
-	return (time_stamp.tv_sec * 1000 + time_stamp.tv_usec / 1000);
+	if (angle < 0)
+		return (angle + PI4);
+	if (angle > PI4)
+		return (angle - PI4);
+	return (angle);
 }

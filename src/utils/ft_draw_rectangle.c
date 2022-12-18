@@ -1,21 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_time.c                                          :+:      :+:    :+:   */
+/*   ft_draw_rectangle.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 15:08:08 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/07/13 15:43:42 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/07/12 18:44:19 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/07/20 16:51:29 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-long	ft_get_time(void)
+void	ft_draw_rectangle(t_game *game, t_img img, int color1, int color2)
 {
-	struct timeval	time_stamp;
+	int	i;
+	int	j;
 
-	gettimeofday(&time_stamp, NULL);
-	return (time_stamp.tv_sec * 1000 + time_stamp.tv_usec / 1000);
+	i = game->start.x;
+	while (i < game->end.x)
+	{
+		j = game->start.y;
+		while (j < game->end.y)
+		{
+			if (i == game->start.x
+				|| j == game->start.y
+				|| i == (game->end.x - 1)
+				|| j == (game->end.y - 1))
+				ft_set_pixel_color(&img, i, j, color1);
+			else
+				ft_set_pixel_color(&img, i, j, color2);
+			j++;
+		}
+		i++;
+	}
 }

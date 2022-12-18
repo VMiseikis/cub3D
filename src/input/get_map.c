@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:07:17 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/10 18:40:42 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/07/10 22:08:02 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int	ft_read_map_from_file(t_game *game, char **line, char **dd_temp, int len)
 		game->map.col_c = len;
 	dd_temp = malloc((game->map.row_c + 1) * sizeof(char *));
 	if (!dd_temp)
-		return (ft_print_error("Error occurred while reading the map"));
+		return (ft_print_err("Error occurred while reading the map"));
 	ft_2dstrcpy(game->map.grid, dd_temp);
 	free(game->map.grid);
 	game->map.grid = malloc((game->map.row_c + 2) * sizeof(char *));
 	if (!game->map.grid)
-		return (ft_print_error("Error occurred while reading the map"));
+		return (ft_print_err("Error occurred while reading the map"));
 	ft_2dstrcpy(dd_temp, game->map.grid);
 	free(dd_temp);
 	game->map.grid[game->map.row_c] = *line;

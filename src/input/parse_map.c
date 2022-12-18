@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:15:13 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/06/27 16:13:09 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:25:54 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_make_grid_square(t_game *game)
 		{
 			tail = (char *) malloc ((game->map.col_c - len + 1) * sizeof(char));
 			if (!tail)
-				return (ft_print_error("Error occurred while reading the map"));
+				return (ft_print_err("Error occurred while reading the map"));
 			tail[game->map.col_c - len] = '\0';
 			while (len < game->map.col_c)
 			{
@@ -41,15 +41,15 @@ int	ft_make_grid_square(t_game *game)
 	return (TRUE);
 }
 
-float	ft_player_look_direction(char c)
+double	ft_player_look_direction(char c)
 {
 	if (c == 'N')
-		return(PI / 2);
+		return (PI3);
 	if (c == 'E')
-		return(0);
+		return (0);
 	if (c == 'S')
-		return(3 * PI / 2);
-	return(PI);
+		return (PI1);
+	return (PI2);
 }
 
 int	ft_get_player(t_game *game, int i, int j)
@@ -57,15 +57,16 @@ int	ft_get_player(t_game *game, int i, int j)
 	if (ft_strchr("NSEW", game->map.grid[i][j]))
 	{
 		if (game->pl.dir != '\0')
-			return (ft_print_error("Multiple players"));
+			return (ft_print_err("Multiple players was found in the map file"));
 		game->pl.dir = game->map.grid[i][j];
-		game->pl.angle = ft_player_look_direction(game->map.grid[i][j]);
-		game->pl.p.x = j;
-		game->pl.p.y = i;
-		// game->pl.mm_p.x = j * game->mmap.t_sz + (game->mmap.t_sz / 2);
-		// game->pl.mm_p.y = i * game->mmap.t_sz + (game->mmap.t_sz / 2);
-		game->pl.mm_p.x = j * game->mmap.t_sz;
-		game->pl.mm_p.y = i * game->mmap.t_sz;
+		game->pl.ang = ft_player_look_direction(game->map.grid[i][j]);
+		game->pl.grid_p.x = j;
+		game->pl.grid_p.y = i;
+		game->pl.m_p.x = j * game->map.t_sz + game->map.t_sz / 2 - PRC;
+		game->pl.m_p.y = i * game->map.t_sz + game->map.t_sz / 2 - PRC;
+		game->pl.mm_p.x = j * game->mmap.t_sz + game->mmap.t_sz / 2 - PRC;
+		game->pl.mm_p.y = i * game->mmap.t_sz + game->mmap.t_sz / 2 - PRC;
+		game->map.grid[i][j] = '0';
 	}
 	return (TRUE);
 }
@@ -82,7 +83,7 @@ int	ft_check_map(t_game *game)
 		while (j < game->map.col_c)
 		{
 			if (!ft_strchr(" 10NSEW", game->map.grid[i][j]))
-				return (ft_print_error("Not valid symbols in the map found"));
+				return (ft_print_err("Not valid symbols in the map found"));
 			if (!ft_get_player(game, i, j)
 				|| !ft_is_map_surrounded_by_wall(game, i, j))
 				return (FALSE);
@@ -90,5 +91,7 @@ int	ft_check_map(t_game *game)
 		}
 		i++;
 	}
+	if (game->pl.dir == '\0')
+		return (ft_print_err("No player in the map"));
 	return (TRUE);
 }

@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers.c                                          :+:      :+:    :+:   */
+/*   ft_random.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/09 23:07:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/10 18:01:36 by vmiseiki         ###   ########.fr       */
+/*   Created: 2021/12/07 22:57:30 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/07/16 22:26:37 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-void	ft_skip_empty_lines_from_file(t_game *game, char **line)
+int	ft_random_number(int i, int j)
 {
-	if (*line == NULL || ft_has_only_spaces(*line))
-	{
-		while (ft_get_line(game->map.fd, line)
-			&& (*line == NULL || ft_has_only_spaces(*line)))
-		{	
-			if (*line)
-				free(*line);
-			continue ;
-		}
-	}
+	return ((rand() % (j - i + 1)) + i);
 }

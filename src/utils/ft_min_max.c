@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_time.c                                          :+:      :+:    :+:   */
+/*   ft_min_max.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 15:08:08 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/07/13 15:43:42 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/07/14 21:42:11 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/07/14 21:43:16 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-long	ft_get_time(void)
+int	ft_min(int i, int j)
 {
-	struct timeval	time_stamp;
+	if (i <= j)
+		return (i);
+	return (j);
+}
 
-	gettimeofday(&time_stamp, NULL);
-	return (time_stamp.tv_sec * 1000 + time_stamp.tv_usec / 1000);
+int	ft_max(int i, int j)
+{
+	if (i >= j)
+		return (i);
+	return (j);
 }

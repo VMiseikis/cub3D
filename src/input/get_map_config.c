@@ -6,11 +6,25 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:08:22 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/10 21:34:38 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/07/10 22:13:47 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
+
+void	ft_skip_empty_lines_from_file(t_game *game, char **line)
+{
+	if (*line == NULL || ft_has_only_spaces(*line))
+	{
+		while (ft_get_line(game->map.fd, line)
+			&& (*line == NULL || ft_has_only_spaces(*line)))
+		{	
+			if (*line)
+				free(*line);
+			continue ;
+		}
+	}
+}
 
 int	ft_read_till_map_found_in_file(t_game *game, char **line)
 {
@@ -28,7 +42,8 @@ int	ft_read_till_map_found_in_file(t_game *game, char **line)
 			|| temp[0] == 'F' || temp[0] == 'C')
 		{
 			free(temp);
-			return (ft_print_error("Duplicate map configuration entries found in map file"));
+			return (ft_print_err
+				("Duplicate map configuration entries found in map file"));
 		}
 		free(temp);
 		return (TRUE);
@@ -64,7 +79,8 @@ int	ft_get_map_config(t_game *game, char **line)
 		if (*line != NULL && ft_trim_str_front(line, ' '))
 		{	
 			if (!ft_strchr("NSEWFC", *line[0]))
-				return (ft_print_error("Unsupported, missing or corrupted entries found in map file"));
+				return (ft_print_err
+					("Unsupported, missing or corrupted entries found in map"));
 			if (!ft_get_map_colors_textures(game, line))
 			{
 				free(*line);
@@ -74,7 +90,8 @@ int	ft_get_map_config(t_game *game, char **line)
 		}
 	}
 	if (!ft_is_map_config_loaded(game))
-		return (ft_print_error("Missing or incorect map configuration parameters"));
+		return (ft_print_err
+			("Missing or incorect map configuration parameters"));
 	if (!ft_read_till_map_found_in_file(game, line))
 	{
 		free(*line);

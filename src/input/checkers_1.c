@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:09:16 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/05/15 20:02:42 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/07/10 18:33:19 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int	ft_is_extention_valid(char *str, char *ext)
 
 int	ft_is_map_config_loaded(t_game *game)
 {
-	if (game->map.no.path == NULL
-		|| game->map.so.path == NULL
-		|| game->map.ea.path == NULL
-		|| game->map.we.path == NULL
-		|| game->map.floor.rgb[0] == -1
-		|| game->map.ceiling.rgb[0] == -1)
+	if (game->txt.no_w.path == NULL
+		|| game->txt.so_w.path == NULL
+		|| game->txt.ea_w.path == NULL
+		|| game->txt.we_w.path == NULL
+		|| game->txt.floor == -1
+		|| game->txt.ceiling == -1)
 		return (FALSE);
 	return (TRUE);
 }
